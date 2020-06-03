@@ -5,5 +5,14 @@
     <StartupObject>KeyVault.Program</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KeyVault.DatabaseScripts\KeyVault.DatabaseScripts.csproj" />
+  </ItemGroup>
+
 
 </Project>

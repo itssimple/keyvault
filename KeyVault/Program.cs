@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.Extensions.Hosting;
 
 namespace KeyVault
@@ -15,7 +16,14 @@ namespace KeyVault
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://localhost:51337");
+                    .ConfigureKestrel(options =>
+                    {
+                        options.ConfigureHttpsDefaults(o =>
+                        {
+                            o.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
+                        });
+                    })
+                    .UseUrls("http://localhost:51337;https://localhost:51338");
                 });
     }
 }
