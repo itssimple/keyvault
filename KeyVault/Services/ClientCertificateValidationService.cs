@@ -17,7 +17,7 @@ namespace KeyVault.Services
         {
             var potentialClient = _db.GetSingleItem(
                 Client.Create,
-                "SELECT clientId, certificateThumbprint FROM Clients WHERE clientId = $clientId AND disabled = 0",
+                "SELECT clientId, certificateThumbprint, created_utc, disabled, disabledDate FROM Clients WHERE clientId = $clientId AND disabled = 0",
                 new Microsoft.Data.Sqlite.SqliteParameter("clientId", clientId)
             );
 
