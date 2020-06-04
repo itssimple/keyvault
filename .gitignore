@@ -4,6 +4,7 @@
 
 # We do not want to store the database in the repository
 storage.db
+storage.db-journal
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and

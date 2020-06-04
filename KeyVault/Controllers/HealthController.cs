@@ -22,5 +22,11 @@ namespace KeyVault.Controllers
                 BackendServices = true
             };
         }
+
+        [Route("whoami")]
+        public object WhoAmI()
+        {
+            return User.Identity;
+        }
     }
 }
