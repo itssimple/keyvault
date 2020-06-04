@@ -20,7 +20,8 @@ namespace KeyVault
                     {
                         options.ConfigureHttpsDefaults(o =>
                         {
-                            o.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
+                            o.ClientCertificateMode = ClientCertificateMode.AllowCertificate;
+                            o.AllowAnyClientCertificate();
                         });
                     })
                     .UseUrls("http://localhost:51337;https://localhost:51338");
