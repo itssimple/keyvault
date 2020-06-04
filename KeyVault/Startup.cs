@@ -46,10 +46,16 @@ namespace KeyVault
                                 context.HttpContext.RequestServices
                                     .GetService<ClientCertificateValidationService>();
 
-                            if (validationService.ValidateCertificate(context.Request.Query["clientId"], context.ClientCertificate))
+                            if (string.IsNullOrWhiteSpace(context.Request.Query["clientId"]))
                             {
-                                var claims = new[]
+                                context.Fail("ClientId missing from request (query parameter)");
+                            }
+                            else
+                            {
+                                if (validationService.ValidateCertificate(context.Request.Query["clientId"], context.ClientCertificate))
                                 {
+                                    var claims = new[]
+                                    {
                                     new Claim(
                                         ClaimTypes.NameIdentifier,
                                         context.ClientCertificate.Subject,
@@ -62,13 +68,14 @@ namespace KeyVault
                                         context.Options.ClaimsIssuer)
                                 };
 
-                                context.Principal = new ClaimsPrincipal(
-                                    new ClaimsIdentity(claims, context.Scheme.Name));
-                                context.Success();
-                            }
-                            else
-                            {
-                                context.Fail("Invalid certificate");
+                                    context.Principal = new ClaimsPrincipal(
+                                        new ClaimsIdentity(claims, context.Scheme.Name));
+                                    context.Success();
+                                }
+                                else
+                                {
+                                    context.Fail("Invalid certificate");
+                                }
                             }
 
                             return Task.CompletedTask;
