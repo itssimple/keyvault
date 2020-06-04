@@ -9,7 +9,7 @@ namespace KeyVault.DatabaseScripts.Models
         public string CertificateThumbprint { get; set; }
         public DateTimeOffset CreatedUtc { get; set; }
         public bool Disabled { get; set; }
-        public DateTimeOffset DisabledDate { get; set; }
+        public DateTimeOffset? DisabledDate { get; set; }
 
         public static Client Create(SqliteDataReader reader)
         {
@@ -19,7 +19,7 @@ namespace KeyVault.DatabaseScripts.Models
                 CertificateThumbprint = reader.GetString(1),
                 CreatedUtc = reader.GetDateTimeOffset(2),
                 Disabled = reader.GetBoolean(3),
-                DisabledDate = reader.GetDateTimeOffset(4)
+                DisabledDate = !reader.IsDBNull(4) ? reader.GetDateTimeOffset(4) : (DateTimeOffset?)null
             };
 
             return item;
