@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\Script0001 - Create tables.sql" />
+    <None Remove="Scripts\Script0001 - Create Clients.sql" />
+    <None Remove="Scripts\Script0002 - Create ClientItems.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\Script0001 - Create tables.sql" />
+    <EmbeddedResource Include="Scripts\Script0001 - Create Clients.sql" />
+    <EmbeddedResource Include="Scripts\Script0002 - Create ClientItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="dbup-sqlite" Version="4.3.0" />
