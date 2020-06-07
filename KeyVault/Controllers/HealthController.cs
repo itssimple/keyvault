@@ -18,7 +18,8 @@ namespace KeyVault.Controllers
         {
             return new
             {
-                BackendServices = true
+                BackendServices = true,
+                Certificate = Request.Headers["X-SSL-CERT"].ToString()
             };
         }
 
