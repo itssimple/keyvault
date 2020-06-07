@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace KeyVault
@@ -42,7 +42,7 @@ namespace KeyVault
 
                     if (!string.IsNullOrWhiteSpace(headerValue))
                     {
-                        byte[] bytes = StringToByteArray(WebUtility.UrlDecode(headerValue));
+                        byte[] bytes = Encoding.Default.GetBytes(WebUtility.UrlDecode(headerValue));
                         clientCertificate = new X509Certificate2(bytes);
                     }
 
@@ -137,19 +137,6 @@ namespace KeyVault
             {
                 endpoints.MapControllers();
             });
-        }
-
-        private static byte[] StringToByteArray(string hex)
-        {
-            int NumberChars = hex.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-
-            for (int i = 0; i < NumberChars; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            }
-
-            return bytes;
         }
     }
 }
