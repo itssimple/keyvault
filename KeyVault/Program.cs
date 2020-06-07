@@ -24,7 +24,7 @@ namespace KeyVault
                             o.AllowAnyClientCertificate();
                         });
                     })
-                    .UseUrls("http://localhost:51337;https://localhost:51338");
+                    .UseUrls("http://localhost:51337");
                 });
     }
 }
