@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace KeyVault
 
                     if (!string.IsNullOrWhiteSpace(headerValue))
                     {
-                        byte[] bytes = StringToByteArray(headerValue);
+                        byte[] bytes = StringToByteArray(WebUtility.UrlDecode(headerValue));
                         clientCertificate = new X509Certificate2(bytes);
                     }
 
