@@ -1,6 +1,7 @@
 ﻿using KeyVault.DataLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace KeyVault.Controllers
 {
@@ -19,7 +20,8 @@ namespace KeyVault.Controllers
             return new
             {
                 BackendServices = true,
-                Certificate = Request.Headers["X-SSL-CERT"].ToString()
+                Certificate = Request.Headers["X-SSL-CERT"].ToString(),
+                SentHeaders = Request.Headers.Select(k => new { k.Key, k.Value }).ToList()
             };
         }
 
