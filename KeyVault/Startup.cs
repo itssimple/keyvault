@@ -4,10 +4,13 @@ using KeyVault.Services;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace KeyVault
@@ -28,6 +31,23 @@ namespace KeyVault
             services.AddScoped<StorageLayer>();
 
             services.AddSingleton<ClientCertificateValidationService>();
+
+            services.AddCertificateForwarding(options =>
+            {
+                options.CertificateHeader = "X-SSL-CERT";
+                options.HeaderConverter = (headerValue) =>
+                {
+                    X509Certificate2 clientCertificate = null;
+
+                    if (!string.IsNullOrWhiteSpace(headerValue))
+                    {
+                        byte[] bytes = StringToByteArray(headerValue);
+                        clientCertificate = new X509Certificate2(bytes);
+                    }
+
+                    return clientCertificate;
+                };
+            });
 
             services
                 .AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
@@ -100,7 +120,13 @@ namespace KeyVault
 
             app.UseRouting();
 
-            //app.UseCertificateForwarding();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseCertificateForwarding();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -108,6 +134,19 @@ namespace KeyVault
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static byte[] StringToByteArray(string hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+
+            for (int i = 0; i < NumberChars; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+
+            return bytes;
         }
     }
 }
