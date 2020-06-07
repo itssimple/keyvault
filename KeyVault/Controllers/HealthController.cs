@@ -26,7 +26,7 @@ namespace KeyVault.Controllers
         [Route("whoami")]
         public object WhoAmI()
         {
-            return User.Identity;
+            return User.Identity.Name;
         }
     }
 }
