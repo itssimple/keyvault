@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KeyVault.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HealthController : ControllerBase
@@ -23,6 +22,7 @@ namespace KeyVault.Controllers
             };
         }
 
+        [Authorize]
         [Route("whoami")]
         public object WhoAmI()
         {
