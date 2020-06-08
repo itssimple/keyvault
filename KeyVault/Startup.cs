@@ -86,6 +86,10 @@ namespace KeyVault
                                         ClaimTypes.Name,
                                         context.ClientCertificate.Subject,
                                         ClaimValueTypes.String,
+                                        context.Options.ClaimsIssuer),
+                                    new Claim(
+                                        ClaimTypes.Thumbprint,
+                                        context.ClientCertificate.Thumbprint,
                                         context.Options.ClaimsIssuer)
                                 };
 
