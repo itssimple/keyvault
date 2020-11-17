@@ -3,6 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>itssimple / nolifeking85</Authors>
+    <Company>It's Simple Studios</Company>
+    <Product>KeyVault Client</Product>
+    <Description>Client to talk to the KeyVault server, used to store and fetch secrets</Description>
+    <PackageProjectUrl>https://github.com/itssimple/keyvault</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/itssimple/keyvault</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
+    <PackageId>itssimple.KeyVault.Client</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
